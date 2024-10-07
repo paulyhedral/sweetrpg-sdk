@@ -22,13 +22,13 @@ jobs:
                 include:
                     - {
                           name: Linux,
-                          python: "3.10",
+                          python: "3.11",
                           os: ubuntu-latest,
-                          tox: py310,
+                          tox: py311,
                       }
         steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-python@v2
+            - uses: actions/checkout@v4
+            - uses: actions/setup-python@v5
               with:
                   python-version: ${{ matrix.python }}
             - name: update-pip
@@ -40,7 +40,7 @@ jobs:
               id: pip-cache
               run: echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
             - name: cache-pip
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                   path: ${{ steps.pip-cache.outputs.dir }}
                   key: pip|${{ runner.os }}|${{ matrix.python }}|${{ hashFiles('setup.py') }}|${{ hashFiles('requirements/*.txt') }}
